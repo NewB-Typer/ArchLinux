@@ -1,0 +1,39 @@
+#! /bin/sh
+
+# Script to set all windows on desktop 4 to floating
+/home/rorsc/CS/floatScript.sh &
+
+
+# Kill if already running
+killall -9 xsettingsd sxhkd dunst ksuperkey xfce4-power-manager bspc polybar
+
+
+# Start sxhkd if it's not already running
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# Set desktop background using feh
+feh --bg-fill ~/Downloads/4707257.jpg &
+
+# Set up desktops (desktops I, II, III)
+bspc monitor -d 1 2 3 4 5
+
+# Configure window manager settings
+# height of polybar is 22pt so top_padding
+bspc config top_padding 15
+bspc config border_width 1
+bspc config window_gap 2
+bspc config split_ratio 0.50
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+
+
+# Set default terminal to xfce4-terminal
+bspc config terminal xfce4-terminal
+
+# Start polybar and plank (assuming plank is your dock)
+polybar top-left &
+polybar top-right &
+plank &
+picom & 
+	
+
